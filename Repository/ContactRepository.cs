@@ -38,5 +38,15 @@ namespace Register.Repository
             return contactDB;
           
         }
+
+        public bool Delete(int id)
+        {
+            ContactModel contactDB = SearchForId(id);
+            if (contactDB == null) throw new System.Exception("Ops! Houve um erro. Não foi possível deletar este contato.");
+
+            _dataContext.Contacts.Remove(contactDB);
+            _dataContext.SaveChanges();
+            return true;
+        }
     }
 }

@@ -25,13 +25,15 @@ namespace Register.Controllers
             ContactModel contact = _contactRepository.SearchForId(id);
             return View(contact);
         }
-        public IActionResult DeleteView()
+        public IActionResult DeleteView(int id)
         {
-            return View();
+            ContactModel contact = _contactRepository.SearchForId(id);
+            return View(contact);
         }
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View();
+            _contactRepository.Delete(id);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
