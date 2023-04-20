@@ -32,22 +32,64 @@ namespace Register.Controllers
         }
         public IActionResult Delete(int id)
         {
-            _contactRepository.Delete(id);
-            return RedirectToAction("Index");
+            try
+            {
+                bool deleted = _contactRepository.Delete(id);
+                if (deleted)
+                {
+                    TempData["SucessMessage"] = "Contact deleted.";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Failed to delete this contact.";
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Failed to delete this contact. " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public IActionResult Create(ContactModel contactModel)
         {
-            _contactRepository.Add(contactModel);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _contactRepository.Add(contactModel);
+                    TempData["SucessMessage"] = "Contact registered.";
+                    return RedirectToAction("Index");
+                }
+                return View(contactModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Failed to register. " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(ContactModel contactModel)
         {
-            _contactRepository.Update(contactModel);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _contactRepository.Update(contactModel);
+                    TempData["SucessMessage"] = "Contact's information updated.";
+                    return RedirectToAction("Index");
+                }
+                return View(contactModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Failed to update contact's information. " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
     }
 }
