@@ -17,6 +17,7 @@ namespace Register
             builder.Services.AddDbContext<DataContext>(options =>
            options.UseSqlServer("Data Source=BEATRICE;Initial Catalog=ContactsTable;Integrated Security=False;User ID=guilherme;Password=12345;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False"));
             builder.Services.AddScoped<IContactRepository, ContactRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
