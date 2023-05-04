@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Register.Models
 {
-    public class UserModel
+    public class UserNoPasswordModel
     {
         public int Id { get; set; }
 
@@ -20,14 +20,5 @@ namespace Register.Models
         [Required(ErrorMessage = "Profile is required.")]
         public ProfileEnum? Profile { get; set; }
 
-        [Required(ErrorMessage = "Password is required.")]
-        public string Password { get; set; }
-        public DateTime RegisterDate { get; set; }
-        public DateTime? EditDate { get; set; }
-
-        public bool PasswordSearch(string password)
-        {
-            return Password == password;
-        }
     }
 }

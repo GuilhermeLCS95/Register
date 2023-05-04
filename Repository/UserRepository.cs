@@ -17,6 +17,10 @@ namespace Register.Repository
             _dataContext.SaveChanges();
             return user;
         }
+        public UserModel LoginSearch(string login)
+        {
+            return _dataContext.Users.FirstOrDefault(x => x.Login.ToUpper() == login.ToUpper());
+        }
         public UserModel SearchForId(int id)
         {
             return _dataContext.Users.FirstOrDefault(x => x.Id == id);

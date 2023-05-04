@@ -31,6 +31,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Login</th>
                 <th scope="col">E-mail</th>
+                <th scope="col">Profile</th>
                 <th scope="col">Register date</th>
                 <th scope="col"></th>
             </tr>
@@ -45,6 +46,7 @@
                         <td>@user.Name</td>
                         <td>@user.Login</td>
                         <td>@user.Email</td>
+                        <td>@(user.Profile == Register.Enums.ProfileEnum.Admin ? "Admin" : "User")</td>
                         <td>@user.RegisterDate</td>
                         <td>
                             <div class="btn-group" role="group">

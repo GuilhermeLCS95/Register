@@ -39,5 +39,65 @@ namespace Register.Controllers
                 return RedirectToAction("Index");
             }
         }
+        public IActionResult DeleteView(int id)
+        {
+            UserModel user = _userRepository.SearchForId(id);
+            return View(user);
+        }
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                bool deleted = _userRepository.Delete(id);
+                if (deleted)
+                {
+                    TempData["SucessMessage"] = "User deleted.";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Failed to delete this user.";
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Failed to delete this user. " + ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
+        public IActionResult Edit(int id)
+        {
+            UserModel user = _userRepository.SearchForId(id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(UserNoPasswordModel userNoPasswordModel)
+        {
+            try
+            {
+                UserModel user = null;
+                if (ModelState.IsValid)
+                {
+                    user = new UserModel()
+                    {
+                        Id = userNoPasswordModel.Id,
+                        Name = userNoPasswordModel.Name,
+                        Login = userNoPasswordModel.Login,
+                        Email = userNoPasswordModel.Email,
+                        Profile = userNoPasswordModel.Profile,
+                    };
+                   user = _userRepository.Update(user);
+                    TempData["SucessMessage"] = "User's information updated.";
+                    return RedirectToAction("Index");
+                }
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Failed to update contact's information. " + ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
     }
 }
